@@ -26,7 +26,14 @@ function playRound(playerSelection, computerSelection) {
     return message;
 }
 
-const computerSelection = getComputerChoice();
-const playerSelection = "Rock";
+function caseInsensitive(userChoice) {
+    const capitalize = userChoice.toLowerCase();
+    return capitalize.charAt(0).toUpperCase() + capitalize.slice(1); 
+}
 
+const userChoice = "pAPEr"; //user choice input
+
+const playerSelection = caseInsensitive(userChoice);
+const computerSelection = getComputerChoice();
+    
 console.log(playRound(playerSelection, computerSelection));
