@@ -26,14 +26,24 @@ function playRound(playerSelection, computerSelection) {
     return message;
 }
 
-function caseInsensitive(userChoice) {
-    const capitalize = userChoice.toLowerCase();
+
+//case insensitive for input
+function playerChoice() {
+    const capitalize = userInput.toLowerCase();
     return capitalize.charAt(0).toUpperCase() + capitalize.slice(1); 
 }
 
-const userChoice = "pAPEr"; //user choice input
+const userInput = "scISSOrS"; //user choice input
 
-const playerSelection = caseInsensitive(userChoice);
+const playerSelection = playerChoice();
 const computerSelection = getComputerChoice();
     
 console.log(playRound(playerSelection, computerSelection));
+
+// const game = () => {  
+//     for (let i = 0; i < 5; i++)
+//     (playRound(playerSelection, computerSelection))
+
+// }
+
+// console.log(game());
