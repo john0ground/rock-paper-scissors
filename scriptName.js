@@ -7,8 +7,15 @@ function getComputerChoice() {
     return compChoice; 
 }
 
+function playerChoice() {
+    let userInput = prompt("Type rock, paper, or, scissors");
+
+    //case insensitive
+    const capitalize = userInput.toLowerCase();
+    return capitalize.charAt(0).toUpperCase() + capitalize.slice(1); 
+}
+
 function playRound(playerSelection, computerSelection) {
-    let message;
     if (
         (playerSelection === "Rock" && computerSelection === "Scissors")
 
@@ -16,34 +23,31 @@ function playRound(playerSelection, computerSelection) {
 
         || (playerSelection === "Scissors" && computerSelection === "Paper")
 
-    ) { message = `You Win! ${playerSelection} beats ${computerSelection}`;
+    ) { console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+        return "player";
 
     } else if (playerSelection === computerSelection) {
-        message = "Draw!";
+        console.log("Draw!");
+        return "tie";
     } else {
-        message = `You Lose! ${computerSelection} beats ${playerSelection}`};
+        console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+        return "computer";
+    }
 
-    return message;
 }
 
 
-//case insensitive for input
-function playerChoice() {
-    const capitalize = userInput.toLowerCase();
-    return capitalize.charAt(0).toUpperCase() + capitalize.slice(1); 
-}
 
-const userInput = "scISSOrS"; //user choice input
 
-const playerSelection = playerChoice();
-const computerSelection = getComputerChoice();
+//5 round game
+const game = () => {
     
-console.log(playRound(playerSelection, computerSelection));
+    for (let i = 0; i < 5; i++) {
+        const computerSelection = getComputerChoice();
+        const playerSelection = playerChoice();
+        console.log(playRound(playerSelection, computerSelection));
+    }
 
-// const game = () => {  
-//     for (let i = 0; i < 5; i++)
-//     (playRound(playerSelection, computerSelection))
+}
 
-// }
-
-// console.log(game());
+game();
