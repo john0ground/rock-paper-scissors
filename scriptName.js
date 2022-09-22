@@ -8,11 +8,18 @@ function getComputerChoice() {
 }
 
 function playerChoice() {
-    let userInput = prompt("Type rock, paper, or, scissors");
-
+    let userInput = prompt("Input rock, paper, scissors");
+    while (userInput == null) {
+        userInput = prompt("Choice empty, type rock, paper, or scissors");
+    }
+   
     //case insensitive
-    const capitalize = userInput.toLowerCase();
-    return capitalize.charAt(0).toUpperCase() + capitalize.slice(1); 
+    const lowerCase = userInput.toLowerCase();
+    const capitalize = lowerCase.charAt(0).toUpperCase() + lowerCase.slice(1); 
+    const choice = capitalize;
+    return choice;
+
+    
 }
 
 function winner(playerSelection, computerSelection) {
@@ -39,13 +46,27 @@ function playRound(playerSelection, computerSelection) {
 
 //5 round game
 const game = () => {
-    
+
+  let playerScore = 0;
+  let computerScore = 0;
+
     for (let i = 0; i < 5; i++) {
         const computerSelection = getComputerChoice();
         const playerSelection = playerChoice();
         console.log(playRound(playerSelection, computerSelection));
-    }
 
+        if (winner(playerSelection, computerSelection) === "player") {playerScore++}
+        else if (winner(playerSelection, computerSelection) === "computer") {computerScore++}
+    }
+    
+    console.log("--------------");
+    console.log(`Game Over, Player score ${playerScore} | Computer score ${computerScore}`);
+
+    if (playerScore > computerScore) {
+        console.log("Player Wins!");
+    } else if (playerScore < computerScore) {
+        console.log("Computer Wins");
+    } else { console.log("It's a tie!"); }
 }
 
 game();
