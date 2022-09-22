@@ -15,7 +15,7 @@ function playerChoice() {
     return capitalize.charAt(0).toUpperCase() + capitalize.slice(1); 
 }
 
-function playRound(playerSelection, computerSelection) {
+function winner(playerSelection, computerSelection) {
     if (
         (playerSelection === "Rock" && computerSelection === "Scissors")
 
@@ -23,20 +23,18 @@ function playRound(playerSelection, computerSelection) {
 
         || (playerSelection === "Scissors" && computerSelection === "Paper")
 
-    ) { console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
-        return "player";
-
-    } else if (playerSelection === computerSelection) {
-        console.log("Draw!");
-        return "tie";
-    } else {
-        console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
-        return "computer";
-    }
+    ) {return "player";}     
+    else if (playerSelection === computerSelection) {return "tie";} 
+    else {return "computer";}
 
 }
 
-
+function playRound(playerSelection, computerSelection) {
+    const check = winner(playerSelection, computerSelection);
+    if (check === "player") {return `You Win! ${playerSelection} beats ${computerSelection}`;}
+    else if (check === "computer") {return `You Lose! ${computerSelection} beats ${playerSelection}`;}
+    else {return "Draw!"}
+}
 
 
 //5 round game
