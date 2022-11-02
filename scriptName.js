@@ -1,5 +1,4 @@
-
-const array = ["Rock", "Paper", "Scissors"];
+const array = ["rock", "paper", "scissors"];
 
 function getComputerChoice() {
     const compRandom = Math.floor(Math.random() * array.length);
@@ -7,66 +6,54 @@ function getComputerChoice() {
     return compChoice; 
 }
 
-function playerChoice() {
-    let userInput = prompt("Input rock, paper, scissors");
-    while (userInput == null) {
-        userInput = prompt("Choice empty, type rock, paper, or scissors");
-    }
-   
-    //case insensitive
-    const lowerCase = userInput.toLowerCase();
-    const capitalize = lowerCase.charAt(0).toUpperCase() + lowerCase.slice(1); 
-    const choice = capitalize;
-    return choice;
-
-    
-}
-
 function winner(playerSelection, computerSelection) {
     if (
-        (playerSelection === "Rock" && computerSelection === "Scissors")
+        (playerSelection === "rock" && computerSelection === "scissors")
 
-        || (playerSelection === "Paper" && computerSelection === "Rock") 
+        || (playerSelection === "paper" && computerSelection === "rock") 
 
-        || (playerSelection === "Scissors" && computerSelection === "Paper")
+        || (playerSelection === "scissors" && computerSelection === "paper")
 
     ) {return "player";}     
-    else if (playerSelection === computerSelection) {return "tie";} 
+    else if ((playerSelection === computerSelection)) {return "tie";} 
     else {return "computer";}
-
 }
 
-function playRound(playerSelection, computerSelection) {
-    const check = winner(playerSelection, computerSelection);
-    if (check === "player") {return `You Win! ${playerSelection} beats ${computerSelection}`;}
-    else if (check === "computer") {return `You Lose! ${computerSelection} beats ${playerSelection}`;}
-    else {return "Draw!"}
-}
+const result = document.querySelector('.result');
+const playerScore = document.querySelector('.player-score');
+const computerScore = document.querySelector('.computer-score');
+const finalResult = document.querySelector('.winner');
 
+let userPoints = 0;
+let computerPoints = 0;
 
-//5 round game
-const game = () => {
+function playRound(e) {
+    const computer = getComputerChoice();
+    const player = e.target.className;
+  
+    const check = winner(player, computer);
 
-  let playerScore = 0;
-  let computerScore = 0;
-
-    for (let i = 0; i < 5; i++) {
-        const computerSelection = getComputerChoice();
-        const playerSelection = playerChoice();
-        console.log(playRound(playerSelection, computerSelection));
-
-        if (winner(playerSelection, computerSelection) === "player") {playerScore++}
-        else if (winner(playerSelection, computerSelection) === "computer") {computerScore++}
+    if (check === "player") {
+        result.textContent = `You Win! ${player} beats ${computer}`;
+        userPoints++;
+        if(userPoints === 5) {
+            finalResult.textContent = 'You Won!'
+        }
+        playerScore.textContent = userPoints;
     }
-    
-    console.log("--------------");
-    console.log(`Game Over, Player score ${playerScore} | Computer score ${computerScore}`);
-
-    if (playerScore > computerScore) {
-        console.log("Player Wins!");
-    } else if (playerScore < computerScore) {
-        console.log("Computer Wins");
-    } else { console.log("It's a tie!"); }
+    else if (check === "computer") {
+        result.textContent = `You Lose! ${computer} beats ${player}`;
+        computerPoints++;
+        if(computerPoints === 5) {
+            finalResult.textContent = 'You Lose';
+        }
+        computerScore.textContent = computerPoints;
+    }
+    else {result.textContent = 'Draw!';}
 }
 
-game();
+const btn = document.querySelectorAll('button');
+btn.forEach(button => button.addEventListener('click', playRound));
+
+
+
