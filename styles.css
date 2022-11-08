@@ -1,14 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
 * {
     box-sizing: border-box;
 }
 
 body {
-    background: linear-gradient(to right, 
+    /* background: linear-gradient(to right, 
               #753280, 
-              #2924b5);
+              #2924b5); */
+    /* background-image: url("wood.jpg"); */
+    background: #333;
+    background-size: cover;
     color: white;
-    font-family: verdana;
-    text-shadow: 2px 2px 3px black;
+    font-family: "Audiowide", verdana;
+    letter-spacing: .2rem;
+    text-shadow: 3px 3px 3px black;
     margin: 0;
 }
 
@@ -63,17 +69,34 @@ h3 {
     align-items: center;
 }
 
+.win-highlight {
+    box-shadow: 10px 5px 20px 10px green;
+}
+
+.lost-highlight {
+    box-shadow: 10px 5px 20px 10px red;
+}
+
 #player-icon {
     transform: scale(7)
-               translate(2px, 0px) 
                rotate(0.15turn)
                rotateY(180deg);
     text-shadow: 0px 0px;
+    position: relative;
+}
+
+.player-animation {
+    animation: bob 1s;
 }
 
 #computer-icon {
-    transform: scale(7) translate(-1px, 0px) rotate(0.85turn);
+    transform: scale(7) rotate(0.85turn);
     text-shadow: 0px 0px;
+    position: relative;
+}
+
+.computer-animation {
+    animation: bob 1s;
 }
 
 .winner-output {
@@ -82,12 +105,37 @@ h3 {
     margin-top: 2rem;
 }
 
+.final-result {
+    width: 400px;
+    height: 100px;
+    background: lightgreen;
+    border: 3px solid black;
+    color: black;
+    text-shadow: 0px 0px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    position: relative;
+    top: -45px;
+}
+
+
 .selections {
     margin: auto;
     margin-bottom: 50px;
     width: 30vw;
     display: flex;
     justify-content: space-between;
+}
+
+.game-over-container {
+    margin: auto;
+    margin-bottom: 50px;
+    width: 30vw;
+    height: 30px;
+    background: gray;
 }
 
 button {
@@ -100,13 +148,24 @@ button > * {
     pointer-events: none;
 }
 
-button:hover {
-    box-shadow: 2px 2px 3px white; 
-}
-
 #icon-selection {
     transform: scale(4);
 }
 
+button:hover {
+    box-shadow: 2px 2px 3px white; 
+    animation: bob 0.7s infinite linear;
+    position: relative;
+}
+
+@keyframes bob {
+    0% {top: 0px;}
+    50% {top: 20px;}
+    100% {top: 0px;}
+}
+
+.rock {
+    transition-property: transform;
+}
 
 
