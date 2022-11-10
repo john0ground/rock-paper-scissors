@@ -16,19 +16,28 @@ function winner(playerSelection, computerSelection) {
 
     ) {return "player";}     
     else if ((playerSelection === computerSelection)) {return "tie";} 
+    else if (
+        playerSelection === "rick" && (computerSelection === "rock" || "paper" || "scissors")
+    ) {return "rick"}
     else {return "computer";}
 }
 
 const result = document.querySelector('.result');
+
 const playerScore = document.querySelector('.player-score');
 const computerScore = document.querySelector('.computer-score');
+
 const playerDisplay = document.querySelector(".player-display");
 const computerDisplay = document.querySelector(".computer-display");
+
 const playerIcon = document.getElementById("player-icon");
 const computerIcon = document.getElementById("computer-icon");
 
 let userPoints = 0;
 let computerPoints = 0;
+
+const btn = document.querySelectorAll('button');
+btn.forEach(button => button.addEventListener('click', playRound));
 
 function playRound(e) {
 
@@ -37,6 +46,9 @@ function playRound(e) {
 
     playerIcon.classList.add('player-animation');
     computerIcon.classList.add('computer-animation');
+
+    playerIcon.textContent = "✊";
+    computerIcon.textContent = "✊";
 
     setTimeout(function () {
         const check = winner(player, computer);
@@ -56,6 +68,10 @@ function playRound(e) {
 
             userPoints++;
             playerScore.textContent = userPoints;
+            playerScore.classList.add('pl-grow');
+            setTimeout(function(){
+                playerScore.classList.remove('pl-grow');
+            }, 500);
 
             removeHighlight(playerDisplay, computerDisplay);
             shadowHighlight(playerDisplay, computerDisplay);
@@ -69,6 +85,10 @@ function playRound(e) {
 
             computerPoints++;
             computerScore.textContent = computerPoints;
+            computerScore.classList.add('comp-grow');
+            setTimeout(function(){
+                computerScore.classList.remove('comp-grow');
+            }, 500);
 
             removeHighlight(playerDisplay, computerDisplay);
             shadowHighlight(computerDisplay, playerDisplay);
@@ -77,7 +97,12 @@ function playRound(e) {
                 gameOver();
             }   
         }
-        else {result.textContent = 'Draw!';
+        else if (check === "rick") {
+            removeHighlight(playerDisplay, computerDisplay);
+            rickRoll();
+            rickDance();
+        }
+        else{result.textContent = 'Draw!';
           removeHighlight(playerDisplay, computerDisplay);
         }
 
@@ -85,6 +110,7 @@ function playRound(e) {
             if (player === "rock") {return "✊"}
             else if (player === "paper") {return "🖐"}
             else if (player === "scissors") {return "✌"}
+            else if (player === "rick") {return '🖕'}
         }
 
         function displayIconComputer() {
@@ -104,8 +130,9 @@ function playRound(e) {
 
 function gameOver() {
     const gameOverContainer = document.createElement('div');
-    gameOverContainer.classList.add('game-over-container');
+    gameOverContainer.classList.add('final-result');
     const para = document.createElement('p');
+    
     gameOverContainer.appendChild(para);
 
     const lostContent = document.createTextNode('You lost, better luck next time!');
@@ -115,15 +142,54 @@ function gameOver() {
         para.append(wonContent)
     } else {para.append(lostContent)}
 
-    // const selectionDisplay = document.querySelector('.selection-display');
-    // selectionDisplay.parentNode.replaceChild(gameOverContainer, selectionDisplay);
+    const winnerOutput = document.querySelector('.winner-output');
+    winnerOutput.appendChild(gameOverContainer);
+
+    playAgain.classList.add('play-again');
+    playAgain.textContent = "Play Again";
+    winnerOutput.appendChild(playAgain);
+
+    result.remove();
 
     btn.forEach(button => {button.disabled = true});
 }
 
+const playAgain = document.createElement('div');
+playAgain.onclick = () => window.location.reload();
 
 
-const btn = document.querySelectorAll('button');
-btn.forEach(button => button.addEventListener('click', playRound));
+
+function rickRoll() {
+    const audio = document.getElementById('never-gonna-give-you-up');
+    audio.play();
+
+    const gameOverContainer = document.createElement('div');
+    gameOverContainer.classList.add('final-result');
+    const para = document.createElement('p');
+    
+    gameOverContainer.appendChild(para);
+    para.textContent = "Game Over, Rick Astley Wins";
+
+    const winnerOutput = document.querySelector('.winner-output');
+    winnerOutput.appendChild(gameOverContainer);
+
+    playAgain.classList.add('play-again');
+    playAgain.textContent = "Play Again";
+    winnerOutput.appendChild(playAgain);
+
+    result.remove();
+
+    btn.forEach(button => {button.disabled = true});
+}
+
+function rickDance() {
+    const dancingRick = document.createElement('img');
+    dancingRick.src = "rick.gif";
+    dancingRick.setAttribute('style', 'width: calc(100% - 30%);')
+
+    const replaceIcon = document.getElementById('computer-icon');
+    replaceIcon.parentNode.replaceChild(dancingRick, replaceIcon);
+}
+
 
 
